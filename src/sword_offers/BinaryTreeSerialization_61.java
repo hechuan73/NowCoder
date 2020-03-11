@@ -8,7 +8,13 @@ import java.util.Queue;
  */
 public class BinaryTreeSerialization_61 {
 
-    public String Serialize(TreeNode root) {
+    /**
+     * Serialized with level order.
+     *
+     * @param root root node of the tree
+     * @return the string of serialized tree
+     */
+    public String Serialize1(TreeNode root) {
         StringBuilder sb = new StringBuilder();
         if (root != null) {
             Queue<TreeNode> queue = new LinkedList<>();
@@ -39,7 +45,13 @@ public class BinaryTreeSerialization_61 {
         return sb.toString();
     }
 
-    public TreeNode Deserialize(String str) {
+    /**
+     * Deserialized with level order.
+     *
+     * @param str the string of serialized tree
+     * @return root node of the tree
+     */
+    public TreeNode Deserialize1(String str) {
         TreeNode root = null;
         if (!str.isEmpty()) {
             String[] nodes = str.split("!");
@@ -77,5 +89,28 @@ public class BinaryTreeSerialization_61 {
         return root;
     }
 
+    public String Serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        if (root == null) { return sb.append('#').append('!').toString();}
 
+        sb.append(root.val).append('!');
+        sb.append(Serialize(root.left));
+        sb.append(Serialize(root.right));
+
+        return sb.toString();
+    }
+
+    public TreeNode Deserialize(String str) {
+        return preOrder(str.split("!"));
+    }
+
+    private int index = -1;
+    private TreeNode preOrder(String[] nodes) {
+        if (++index >= nodes.length || "#".equals(nodes[index])) { return null; }
+
+        TreeNode node = new TreeNode(Integer.parseInt(nodes[index]));
+        node.left = preOrder(nodes);
+        node.right = preOrder(nodes);
+        return node;
+    }
 }
