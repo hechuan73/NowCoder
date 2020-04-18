@@ -13,6 +13,7 @@ public class MinimumNumberInRotatedAndSortedArray_6 {
             mid = ((high-low) >> 1) + low;
             if (array[mid] > array[high]) { low = mid+1; }
             else if (array[mid] < array[high]) { high = mid; }
+            // 两者相等时，无法判定，可能包含左边的数字一直是一样的这种情况，所以只能让high减小
             else { high--; }
         }
 
