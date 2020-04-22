@@ -18,16 +18,16 @@ public class PathSumEqualToTarget_24 {
 
     private void dfs(ArrayList<ArrayList<Integer>> res, ArrayList<Integer> path, TreeNode root,int target) {
         if (root != null) {
-            target -= root.val;
             path.add(root.val);
+            target -= root.val;
             if (target == 0 && root.left == null && root.right == null) {
                 res.add(new ArrayList<>(path));
             }
-
-            if (target > 0) {
+            else {
                 dfs(res, path, root.left, target);
                 dfs(res, path, root.right, target);
             }
+
             path.remove(path.size()-1);
         }
     }
